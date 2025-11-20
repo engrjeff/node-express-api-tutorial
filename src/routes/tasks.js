@@ -4,8 +4,11 @@ import {
   validateCreateTask,
   validateUpdateTask,
 } from '../validations/tasks.js';
+import { protectRoutes } from '../middlewares/protect.js';
 
 const tasksRouter = express.Router();
+
+tasksRouter.use(protectRoutes);
 
 tasksRouter
   .route('/tasks')
