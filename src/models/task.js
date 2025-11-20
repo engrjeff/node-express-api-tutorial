@@ -22,8 +22,34 @@ const create = (title) => {
   return task;
 };
 
+const update = (id, updates) => {
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+
+  if (taskIndex === -1) {
+    return null;
+  }
+
+  const updatedTask = { ...tasks[taskIndex], ...updates };
+  tasks[taskIndex] = updatedTask;
+
+  return updatedTask;
+};
+
+const remove = (id) => {
+  const taskIndex = tasks.findIndex((task) => task.id === id);
+
+  if (taskIndex === -1) {
+    return false;
+  }
+
+  tasks.splice(taskIndex, 1);
+  return true;
+};
+
 export const TaskModel = {
   findMany,
   findOne,
   create,
+  update,
+  remove,
 };
