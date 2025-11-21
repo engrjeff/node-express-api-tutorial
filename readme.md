@@ -18,10 +18,17 @@ npm install
 // .env
 
 PORT=5010
+API_KEY=secret
 ```
 
 ## Run Dev Server
 
 ```shell
 npm run dev
+```
+
+## Run type-checking
+
+```shell
+npm run typecheck
 ```

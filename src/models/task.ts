@@ -1,19 +1,20 @@
-import { tasks } from '../data/tasks.js';
+import { tasks } from '../data/tasks';
+import type { CreateTaskDto, Task, UpdateTaskDto } from '../types/task';
 
 const findMany = () => {
   return tasks;
 };
 
-const findOne = (id) => {
+const findOne = (id: string) => {
   const foundTask = tasks.find((task) => task.id === id);
   return foundTask;
 };
 
-const create = (title) => {
+const create = (data: CreateTaskDto) => {
   const id = crypto.randomUUID();
   const task = {
     id,
-    title,
+    title: data.title,
     isCompleted: false,
   };
 
@@ -22,20 +23,20 @@ const create = (title) => {
   return task;
 };
 
-const update = (id, updates) => {
+const update = (id: string, updates: UpdateTaskDto) => {
   const taskIndex = tasks.findIndex((task) => task.id === id);
 
   if (taskIndex === -1) {
     return null;
   }
 
-  const updatedTask = { ...tasks[taskIndex], ...updates };
+  const updatedTask = { ...tasks[taskIndex], ...updates } as Task;
   tasks[taskIndex] = updatedTask;
 
   return updatedTask;
 };
 
-const remove = (id) => {
+const remove = (id: string) => {
   const taskIndex = tasks.findIndex((task) => task.id === id);
 
   if (taskIndex === -1) {

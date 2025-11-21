@@ -1,6 +1,7 @@
-import { TaskModel } from '../models/task.js';
+import type { NextFunction, Request, Response } from 'express';
+import { TaskModel } from '../models/task';
 
-const getTasks = (req, res) => {
+const getTasks = (req: Request, res: Response, next: NextFunction) => {
   //   const query = req.query;
 
   //   if (query.completed) {
@@ -17,8 +18,10 @@ const getTasks = (req, res) => {
   res.json({ data: tasks });
 };
 
-const getTaskById = (req, res) => {
+const getTaskById = (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
+
+  if (!id) return res.status(400).json({ error: 'Task ID is required' });
 
   const task = TaskModel.findOne(id);
 
@@ -27,21 +30,23 @@ const getTaskById = (req, res) => {
   res.json(task);
 };
 
-const createTask = (req, res) => {
+const createTask = (req: Request, res: Response, next: NextFunction) => {
   const body = req.body;
 
   if (!body.title) {
     return res.status(400).json({ error: 'Title is required.' });
   }
 
-  const task = TaskModel.create(body.title);
+  const task = TaskModel.create({ title: body.title });
 
   res.status(201).json({ data: task });
 };
 
-const updateTask = (req, res) => {
+const updateTask = (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
   const updates = req.body;
+
+  if (!id) return res.status(400).json({ error: 'Task ID is required' });
 
   const updatedTask = TaskModel.update(id, updates);
 
@@ -52,8 +57,10 @@ const updateTask = (req, res) => {
   res.json({ data: updatedTask });
 };
 
-const deleteTask = (req, res) => {
+const deleteTask = (req: Request, res: Response, next: NextFunction) => {
   const id = req.params.id;
+
+  if (!id) return res.status(400).json({ error: 'Task ID is required' });
 
   const wasDeleted = TaskModel.remove(id);
 

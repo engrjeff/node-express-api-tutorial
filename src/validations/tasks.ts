@@ -1,4 +1,10 @@
-export const validateCreateTask = (req, res, next) => {
+import type { NextFunction, Request, Response } from 'express';
+
+export const validateCreateTask = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { title } = req.body;
 
   if (!title || typeof title !== 'string' || title.trim() === '') {
@@ -10,7 +16,11 @@ export const validateCreateTask = (req, res, next) => {
   next();
 };
 
-export const validateUpdateTask = (req, res, next) => {
+export const validateUpdateTask = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { title, isCompleted } = req.body;
 
   if (title !== undefined) {
