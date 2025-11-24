@@ -42,6 +42,13 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "esModuleInterop": true
-  }
+    "esModuleInterop": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+  },
+
+  // Only include the src tree in the program so files at the repo root
+  // (like eslint.config.ts) are not accidentally compiled.
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

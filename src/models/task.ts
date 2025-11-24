@@ -1,5 +1,5 @@
-import { tasks } from '../data/tasks';
-import type { CreateTaskDto, Task, UpdateTaskDto } from '../types/task';
+import { tasks } from '../data/tasks.js';
+import type { CreateTaskDto, Task, UpdateTaskDto } from '../types/task.js';
 
 const findMany = () => {
   return tasks;

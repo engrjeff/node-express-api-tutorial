@@ -1,4 +1,4 @@
-import type { Task } from '../types/task';
+import type { Task } from '../types/task.js';
 
 export const tasks: Task[] = Array.from(Array(10).keys()).map((n) => ({
   id: (n + 1).toString(),

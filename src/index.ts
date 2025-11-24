@@ -3,8 +3,8 @@ import express from 'express';
 
 dotenv.config();
 
-import { tasksRouter } from './routes/tasks';
-import { errorHandler, notFoundHandler } from './utils/error-handler';
+import { tasksRouter } from './routes/tasks.js';
+import { errorHandler, notFoundHandler } from './utils/error-handler.js';
 
 const app = express();
 

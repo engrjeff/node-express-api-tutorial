@@ -1,74 +1,94 @@
 import type { NextFunction, Request, Response } from 'express';
-import { TaskModel } from '../models/task';
+import { TaskModel } from '../models/task.js';
 
 const getTasks = (req: Request, res: Response, next: NextFunction) => {
-  //   const query = req.query;
+  try {
+    //   const query = req.query;
 
-  //   if (query.completed) {
-  //     const isCompleted = query.completed === 'true' ? true : false; // ternary
+    //   if (query.completed) {
+    //     const isCompleted = query.completed === 'true' ? true : false; // ternary
 
-  //     const completedTasks = tasks.filter(
-  //       (task) => task.isCompleted === isCompleted
-  //     );
+    //     const completedTasks = tasks.filter(
+    //       (task) => task.isCompleted === isCompleted
+    //     );
 
-  //     return res.json({ data: completedTasks });
-  //   }
-  const tasks = TaskModel.findMany();
+    //     return res.json({ data: completedTasks });
+    //   }
+    const tasks = TaskModel.findMany();
 
-  res.json({ data: tasks });
+    res.json({ data: tasks });
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getTaskById = (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
+  try {
+    const id = req.params.id;
 
-  if (!id) return res.status(400).json({ error: 'Task ID is required' });
+    if (!id) return res.status(400).json({ error: 'Task ID is required' });
 
-  const task = TaskModel.findOne(id);
+    const task = TaskModel.findOne(id);
 
-  if (!task) return res.status(404).json({ error: 'Task Not Found' });
+    if (!task) return res.status(404).json({ error: 'Task Not Found' });
 
-  res.json(task);
+    res.json(task);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const createTask = (req: Request, res: Response, next: NextFunction) => {
-  const body = req.body;
+  try {
+    const body = req.body;
 
-  if (!body.title) {
-    return res.status(400).json({ error: 'Title is required.' });
+    if (!body.title) {
+      return res.status(400).json({ error: 'Title is required.' });
+    }
+
+    const task = TaskModel.create({ title: body.title });
+
+    res.status(201).json({ data: task });
+  } catch (error) {
+    next(error);
   }
-
-  const task = TaskModel.create({ title: body.title });
-
-  res.status(201).json({ data: task });
 };
 
 const updateTask = (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
-  const updates = req.body;
+  try {
+    const id = req.params.id;
+    const updates = req.body;
 
-  if (!id) return res.status(400).json({ error: 'Task ID is required' });
+    if (!id) return res.status(400).json({ error: 'Task ID is required' });
 
-  const updatedTask = TaskModel.update(id, updates);
+    const updatedTask = TaskModel.update(id, updates);
 
-  if (!updatedTask) {
-    return res.status(404).json({ error: 'Task Not Found' });
+    if (!updatedTask) {
+      return res.status(404).json({ error: 'Task Not Found' });
+    }
+
+    res.json({ data: updatedTask });
+  } catch (error) {
+    next(error);
   }
-
-  res.json({ data: updatedTask });
 };
 
 const deleteTask = (req: Request, res: Response, next: NextFunction) => {
-  const id = req.params.id;
+  try {
+    const id = req.params.id;
 
-  if (!id) return res.status(400).json({ error: 'Task ID is required' });
+    if (!id) return res.status(400).json({ error: 'Task ID is required' });
 
-  const wasDeleted = TaskModel.remove(id);
+    const wasDeleted = TaskModel.remove(id);
 
-  if (!wasDeleted) {
-    return res.status(404).json({ error: 'Task Not Found' });
+    if (!wasDeleted) {
+      return res.status(404).json({ error: 'Task Not Found' });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    next(error);
   }
-
-  res.status(204).send();
 };
 
 export const tasksController = {
