@@ -3,7 +3,6 @@ import express from 'express';
 
 dotenv.config();
 
-import { TaskModel } from './models/task.js';
 import { tasksRouter } from './routes/tasks.js';
 import { logger } from './middlewares/logger.js';
 
