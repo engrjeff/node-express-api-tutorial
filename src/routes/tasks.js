@@ -8,9 +8,10 @@ const tasksRouter = express.Router();
 
 tasksRouter.use(protect);
 
-tasksRouter.get('/tasks', tasksController.getAll);
-
-tasksRouter.post('/tasks', validateCreateTask, tasksController.create);
+tasksRouter
+  .route('/tasks')
+  .get(tasksController.getAll)
+  .post(validateCreateTask, tasksController.create);
 
 tasksRouter.get('/tasks/:id', tasksController.getById);
 
