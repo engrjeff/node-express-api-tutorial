@@ -25,3 +25,9 @@ PORT=5010
 ```shell
 npm run dev
 ```
+
+## Run Linter
+
+```shell
+npm run lint
+```
