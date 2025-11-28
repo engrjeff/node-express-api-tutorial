@@ -1,36 +1,27 @@
-import * as dotenv from 'dotenv';
-import express from 'express';
+// REFACTORED VERSION
+import * as dotenv from "dotenv";
+import express from "express";
+import { taskRouter } from "./routes/tasksRouter.js";
+import { logger } from "./middleware/taskLogger.js";
 
+// Access .env
 dotenv.config();
-
-import { tasksRouter } from './routes/tasks.js';
-import { logger } from './middlewares/logger.js';
-
-const app = express();
-
 const port = process.env.PORT || 5010;
 
+// Create our APP (Create a app.listen below)
+const app = express();
+
+// Allows us to access JSON files
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello from root');
-});
-
-app.get('/hello', (req, res) => {
-  res.json({ greeting: 'Hi, jeff' });
-});
-
-// resources
-
-// api router
+// API router
 const apiRouter = express.Router();
-
-// tasks
-apiRouter.use(tasksRouter);
+apiRouter.use(taskRouter);
 
 app.use(logger);
-app.use('/api', apiRouter);
+app.use("/api", apiRouter);
 
-app.listen(port, function () {
-  console.log(`Server running at port ${port}...`);
+// FINALLY DON'T FORGET TO ADD app.listen
+app.listen(port, () => {
+  console.log("App started on PORT: " + port);
 });
